@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import ChatWindow from './ChatWindow';
 import Sidebar from './Sidebar';
-//import { getChatRooms } from './api'; // Assuming you have an API file for fetching chat rooms
+import { getChatRooms } from './api'; // Assuming you have an API file for fetching chat rooms
 
 function App() {
   const [chatRooms, setChatRooms] = useState([]);
@@ -30,6 +30,7 @@ function App() {
     <div className="App">
       <Sidebar chatRooms={chatRooms} onSelect={handleRoomSelect} />
       <ChatWindow selectedRoom={selectedRoom} />
+      
     </div>
   );
 }
