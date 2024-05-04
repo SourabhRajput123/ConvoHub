@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState, useEffect } from 'react';
+import './App.css';
+import ChatWindow from './ChatWindow';
+import Sidebar from './Sidebar';
+//import { getChatRooms } from './api'; // Assuming you have an API file for fetching chat rooms
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [chatRooms, setChatRooms] = useState([]);
+  const [selectedRoom, setSelectedRoom] = useState(null);
+
+  useEffect(() => {
+    // Fetch chat rooms when component mounts
+    fetchChatRooms();
+  }, []);
+
+  const fetchChatRooms = async () => {
+    try {
+      const rooms = await getChatRooms(); // Function to fetch chat rooms from the server
+      setChatRooms(rooms);
+    } catch (error) {
+      console.error('Error fetching chat rooms:', error);
+    }
+  };
+
+  const handleRoomSelect = (room) => {
+    setSelectedRoom(room);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="App">
+      <Sidebar chatRooms={chatRooms} onSelect={handleRoomSelect} />
+      <ChatWindow selectedRoom={selectedRoom} />
+    </div>
+  );
 }
 
-export default App
+export default App;
