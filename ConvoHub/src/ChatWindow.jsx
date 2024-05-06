@@ -23,7 +23,7 @@ function ChatWindow({ selectedRoom }) {
   };
 
   return (
-    <div className="ChatWindow">
+    <div className="ChatWindow text-red-500 text-3xl font-bold underline">
       <h2>{selectedRoom ? `Chatting in ${selectedRoom.name}` : 'Select a room'}</h2>
       <div className="messages">
         {messages.map((message) => (
